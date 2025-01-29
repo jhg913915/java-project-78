@@ -4,3 +4,5 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/e6c751b66e11610afdcd/maintainability)](https://codeclimate.com/github/jhg913915/java-project-78/maintainability)
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/e6c751b66e11610afdcd/test_coverage)](https://codeclimate.com/github/jhg913915/java-project-78/test_coverage)
+
+[![Java CI](https://github.com/jhg913915/java-project-78/actions/workflows/main.yml/badge.svg)](https://github.com/jhg913915/java-project-78/actions/workflows/main.yml)
