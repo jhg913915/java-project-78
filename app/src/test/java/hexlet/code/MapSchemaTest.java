@@ -9,8 +9,8 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class MapSchemaTest {
-    Validator v;
+public final class MapSchemaTest {
+    private Validator v;
 
     @BeforeEach
     void beforeEach() {
