@@ -1,15 +1,21 @@
 package hexlet.code;
 
 import hexlet.code.schemas.StringSchema;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class StringSchemaTest {
+    Validator v;
+
+    @BeforeEach
+    void beforeEach() {
+        v = new Validator();
+    }
 
     @Test
     void testStringSchemaWithoutRequired() {
-        Validator v = new Validator();
         StringSchema schema = v.string();
 
         assertTrue(schema.isValid(""));
@@ -18,7 +24,6 @@ public class StringSchemaTest {
 
     @Test
     void testStringSchemaRequired() {
-        Validator v = new Validator();
         StringSchema schema = v.string().required();
 
         assertFalse(schema.isValid(null));
@@ -29,7 +34,6 @@ public class StringSchemaTest {
 
     @Test
     void testStringSchemaContains() {
-        Validator v = new Validator();
         StringSchema schema = v.string().contains("he");
         StringSchema schema2 = v.string().contains("hexl");
         StringSchema schema3 = v.string().contains("hexlhex");
@@ -41,7 +45,6 @@ public class StringSchemaTest {
 
     @Test
     void testStringSchemaRequiredAndContains() {
-        Validator v = new Validator();
         StringSchema schema = v.string().required().contains("he");
 
         assertFalse(schema.isValid(null));
@@ -52,7 +55,6 @@ public class StringSchemaTest {
 
     @Test
     void testStringSchemaMinLength() {
-        Validator v = new Validator();
         StringSchema schema1 = v.string().minLength(10);
         StringSchema schema2 = v.string().minLength(10).minLength(4);
 
@@ -63,7 +65,6 @@ public class StringSchemaTest {
 
     @Test
     void testStringSchemaAllRules() {
-        Validator v = new Validator();
         StringSchema schema = v.string().required().minLength(5).contains("hex");
 
         assertFalse(schema.isValid(null));

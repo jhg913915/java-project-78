@@ -1,15 +1,21 @@
 package hexlet.code;
 
 import hexlet.code.schemas.NumberSchema;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class NumberSchemaTest {
+    Validator v;
+
+    @BeforeEach
+    void beforeEach() {
+        v = new Validator();
+    }
 
     @Test
     void testNumberSchemaWithoutRequired() {
-        Validator v = new Validator();
         NumberSchema schema = v.number();
         assertTrue(schema.isValid(5));
         assertTrue(schema.isValid(null));
@@ -18,7 +24,6 @@ public class NumberSchemaTest {
 
     @Test
     void testNumberSchemaRequired() {
-        Validator v = new Validator();
         NumberSchema schema = v.number().required();
         assertFalse(schema.isValid(null));
         assertTrue(schema.isValid(10));
@@ -26,7 +31,6 @@ public class NumberSchemaTest {
 
     @Test
     void testNumberSchemaPositive() {
-        Validator v = new Validator();
         NumberSchema schema = v.number().positive();
         assertTrue(schema.isValid(null));
         assertTrue(schema.isValid(5));
@@ -36,7 +40,6 @@ public class NumberSchemaTest {
 
     @Test
     void testNumberSchemaRange() {
-        Validator v = new Validator();
         NumberSchema schema = v.number().range(5, 10);
         assertTrue(schema.isValid(5));
         assertTrue(schema.isValid(10));
@@ -46,7 +49,6 @@ public class NumberSchemaTest {
 
     @Test
     void testNumberSchemaAllRules() {
-        Validator v = new Validator();
         NumberSchema schema = v.number().required().positive().range(5, 10);
 
         assertFalse(schema.isValid(null));
@@ -59,7 +61,6 @@ public class NumberSchemaTest {
 
     @Test
     void testNumberSchemaRequiredAndPositive() {
-        Validator v = new Validator();
         NumberSchema schema = v.number().required().positive();
 
         assertFalse(schema.isValid(null));
