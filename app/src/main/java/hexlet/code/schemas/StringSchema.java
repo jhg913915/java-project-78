@@ -1,8 +1,5 @@
 package hexlet.code.schemas;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
 import java.util.Objects;
 
 public class StringSchema extends BaseSchema<String> {
