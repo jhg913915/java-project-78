@@ -55,16 +55,13 @@ public final class MapSchemaTest {
     static Stream<MapSizeTestCase> provideMapSizeTestCases() {
         Map<String, String> data1 = new HashMap<>();
         data1.put("key1", "value1");
-
         Map<String, String> data2 = new HashMap<>();
         data2.put("key1", "value1");
         data2.put("key2", "value2");
-
         Map<String, String> data3 = new HashMap<>();
         data3.put("key1", "value1");
         data3.put("key2", "value2");
         data3.put("key3", "value3");
-
         return Stream.of(
                 new MapSizeTestCase(2, data1, false),
                 new MapSizeTestCase(2, data2, true),
