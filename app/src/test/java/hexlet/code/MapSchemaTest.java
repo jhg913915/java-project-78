@@ -105,31 +105,24 @@ public final class MapSchemaTest {
 
     static Stream<MapShapeTestCase> provideMapShapeTestCases() {
         Validator v = new Validator();
-
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
         schemas.put("firstName", v.string().required());
         schemas.put("lastName", v.string().required().minLength(2));
-
         Map<String, String> human1 = new HashMap<>();
         human1.put("firstName", "John");
         human1.put("lastName", "Smith");
-
         Map<String, String> human2 = new HashMap<>();
         human2.put("firstName", "John");
         human2.put("lastName", null);
-
         Map<String, String> human3 = new HashMap<>();
         human3.put("firstName", "Anna");
         human3.put("lastName", "B");
-
         Map<String, String> human4 = new HashMap<>();
         human4.put("firstName", null);
         human4.put("lastName", "Smith");
-
         Map<String, String> human5 = new HashMap<>();
         human5.put("firstName", "John");
         human5.remove("lastName"); // Simulate missing key
-
         return Stream.of(
                 new MapShapeTestCase(schemas, human1, true),
                 new MapShapeTestCase(schemas, human2, false),
