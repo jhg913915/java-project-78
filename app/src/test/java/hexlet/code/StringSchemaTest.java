@@ -3,6 +3,10 @@ package hexlet.code;
 import hexlet.code.schemas.StringSchema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -22,25 +26,38 @@ public final class StringSchemaTest {
         assertTrue(schema.isValid(null));
     }
 
-    @Test
-    void testStringSchemaRequired() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    void testStringSchemaRequiredNegative(String value) {
         StringSchema schema = v.string().required();
 
-        assertFalse(schema.isValid(null));
-        assertFalse(schema.isValid(""));
-        assertTrue(schema.isValid("what does the fox say"));
-        assertTrue(schema.isValid("hexlet"));
+        assertFalse(schema.isValid(value));
     }
 
-    @Test
-    void testStringSchemaContains() {
+    @ParameterizedTest
+    @ValueSource(strings = {"what does the fox say", "hexlet"})
+    void testStringSchemaRequiredPositive(String value) {
+        StringSchema schema = v.string().required();
+
+        assertTrue(schema.isValid(value));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"hexl hexl hex hex hex"})
+    void testStringSchemaContainsPositive(String value) {
         StringSchema schema = v.string().contains("he");
         StringSchema schema2 = v.string().contains("hexl");
+
+        assertTrue(schema.isValid(value));
+        assertTrue(schema2.isValid(value));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"hexl hexl hex hex hex"})
+    void testStringSchemaContainsNegative(String value) {
         StringSchema schema3 = v.string().contains("hexlhex");
 
-        assertTrue(schema.isValid("hexl hexl hex hex hex"));
-        assertTrue(schema2.isValid("hexl hexl hex hex hex"));
-        assertFalse(schema3.isValid("hexl hexl hex hex hex"));
+        assertFalse(schema3.isValid(value));
     }
 
     @Test
