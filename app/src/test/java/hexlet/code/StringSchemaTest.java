@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,12 +19,13 @@ public final class StringSchemaTest {
         v = new Validator();
     }
 
-    @Test
-    void testStringSchemaWithoutRequired() {
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {""})
+    void testStringSchemaWithoutRequired(String value) {
         StringSchema schema = v.string();
 
-        assertTrue(schema.isValid(""));
-        assertTrue(schema.isValid(null));
+        assertTrue(schema.isValid(value));
     }
 
     @ParameterizedTest

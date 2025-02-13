@@ -4,6 +4,7 @@ import hexlet.code.schemas.NumberSchema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,12 +20,12 @@ public final class NumberSchemaTest {
         schema = v.number();
     }
 
-    @Test
-    void testNumberSchemaWithoutRequired() {
-        assertTrue(schema.isValid(5));
-        assertTrue(schema.isValid(null));
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(ints = {5})
+    void testNumberSchemaWithoutRequired(Integer number) {
+        assertTrue(schema.isValid(number));
     }
-
 
     @Test
     void testNumberSchemaRequired() {
@@ -84,14 +85,18 @@ public final class NumberSchemaTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 50, -1})
-    void testNumberSchemaPositiveRequiredAndPositiveNumbers(int number) {
+    @ValueSource(ints = {1, 2, 3, 4, 50})
+    void testNumberSchemaPositiveRequiredAndPositiveNumbersValid(int number) {
         schema.required().positive();
 
-        if (number > 0) {
-            assertTrue(schema.isValid(number));
-        } else {
-            assertFalse(schema.isValid(number));
-        }
+        assertTrue(schema.isValid(number));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -100})
+    void testNumberSchemaPositiveRequiredAndPositiveNumbersInvalid(int number) {
+        schema.required().positive();
+
+        assertFalse(schema.isValid(number));
     }
 }
